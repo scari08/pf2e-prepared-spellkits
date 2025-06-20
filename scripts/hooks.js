@@ -78,11 +78,8 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create dropdown with initial options
     const dropdown = document.createElement("select");
-    const options = [
-      ...(kitName == "custom" ? [{ value: "custom", text: "custom" }] : []),
-      ...Object.keys(savedSpellKits).map(key => ({ value: key, text: key }))
-    ];
-    options.forEach(opt => {
+    const options = [...(kitName == "custom" ? [{ value: "custom", text: "custom" }] : []), ...Object.keys(savedSpellKits).map((key) => ({ value: key, text: key }))];
+    options.forEach((opt) => {
       const option = document.createElement("option");
       option.value = opt.value;
       option.textContent = opt.text;
@@ -137,27 +134,22 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Save button click handler
     saveButton.addEventListener("click", () => {
       const newValue = sanitizeKey(input.value.trim());
-      if (newValue === "") return; // ignore empty input
-
-      // Check if value already exists
-      const exists = Array.from(dropdown.options).some((opt) => opt.value.toLowerCase() === newValue.toLowerCase());
-      if (exists) {
-        ui.notifications.error("Value already exists!");
+      if (newValue === "") {
+        ui.notifications.warn("Spellkit name cannot be empty.");
         return;
       }
 
-      // Create and append new option
-      const newOption = document.createElement("option");
-      newOption.value = newValue;
-      newOption.textContent = newValue;
-      dropdown.appendChild(newOption);
+      // Check if value already exists
+      const exists = Array.from(dropdown.options).some((opt) => opt.value === newValue);
+      kitName = newValue;
 
       // Save the new spellkit loadout in the item's flags
-      kitName = newValue;
       spellcastingEntry.setFlag(MODULE_ID, kitName, currentSpellKit);
     });
   });
 }
+
 function sanitizeKey(key) {
+  // Replaces any character in the key that is not a letter, digit, underscore, or hyphen with an underscore.
   return key.replace(/[^\w\-]/g, "_");
 }
