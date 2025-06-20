@@ -29,10 +29,34 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     .filter((item) => item !== null);
 
   preparedSpellcastingEntries.forEach((entry) => {
-    const savedSpellKits = actor.getFlag(MODULE_ID, entry.id); // Could be undefined if there are no saved kits yet
-
-    const currentSpellKit = actor.getEmbeddedDocument("Item", entry.id).system.slots;
+    const spellcastingEntry = actor.getEmbeddedDocument("Item", entry.id);
+    const currentSpellKit = spellcastingEntry.system.slots;
     let kitName = "custom"; // TODO check if current is one of the saved and change name
+    const savedSpellKits = spellcastingEntry.flags[MODULE_ID] || {};
+
+    Object.keys(savedSpellKits).forEach((key) => {
+      // Check if current spellkit matches any of those in the flags
+      const savedKit = savedSpellKits[key];
+      let allMatch = true;
+      for (let slot of Object.keys(currentSpellKit)) {
+        const currPrepared = currentSpellKit[slot]?.prepared || [];
+        const savedPrepared = savedKit?.[slot]?.prepared || [];
+        if (currPrepared.length !== savedPrepared.length) {
+          allMatch = false;
+          break;
+        }
+        for (let i = 0; i < currPrepared.length; i++) {
+          if ((currPrepared[i]?.id || null) !== (savedPrepared[i]?.id || null)) {
+            allMatch = false;
+            break;
+          }
+        }
+        if (!allMatch) break;
+      }
+      if (allMatch) {
+        kitName = key;
+      }
+    });
 
     // Create the arrow icon
     const arrowIcon = document.createElement("span");
@@ -54,25 +78,24 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create dropdown with initial options
     const dropdown = document.createElement("select");
-    const custom = document.createElement("option");
-    custom.value = "custom";
-    custom.textContent = "custom";
-    dropdown.appendChild(custom);
-    if (savedSpellKits && typeof savedSpellKits === "object") {
-      Object.keys(savedSpellKits).forEach((key) => {
-        const option = document.createElement("option");
-        option.value = key;
-        option.textContent = key;
-        dropdown.appendChild(option);
-      });
-    }
+    const options = [
+      ...(kitName == "custom" ? [{ value: "custom", text: "custom" }] : []),
+      ...Object.keys(savedSpellKits).map(key => ({ value: key, text: key }))
+    ];
+    options.forEach(opt => {
+      const option = document.createElement("option");
+      option.value = opt.value;
+      option.textContent = opt.text;
+      dropdown.appendChild(option);
+    });
+    dropdown.value = kitName; // Set current value
 
     // When dropdown value changes, the spellkit of that entry changes
     dropdown.addEventListener("change", () => {
       const selectedValue = dropdown.value;
       if (selectedValue !== "custom") {
         const kitLoad = savedSpellKits[selectedValue];
-        actor.updateEmbeddedDocuments("Item", [{ _id: entry.id, "system.slots": kitLoad }]);
+        spellcastingEntry.update({ _id: entry.id, "system.slots": kitLoad });
       }
     });
 
@@ -129,13 +152,12 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
       newOption.textContent = newValue;
       dropdown.appendChild(newOption);
 
-      // Save the new spellkit loadout in the actor's flags
+      // Save the new spellkit loadout in the item's flags
       kitName = newValue;
-      actor.setFlag(MODULE_ID, `${entry.id}.${kitName}`, currentSpellKit);
+      spellcastingEntry.setFlag(MODULE_ID, kitName, currentSpellKit);
     });
   });
 }
-
 function sanitizeKey(key) {
   return key.replace(/[^\w\-]/g, "_");
 }
