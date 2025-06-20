@@ -1,0 +1,36 @@
+{
+  "id": "pf2e-prepared-spellkits",
+  "title": "PF2e Prepared Spellkits",
+  "description": "You can save different loadouts of prepared spells, to load with a click in a new day",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13"
+  },
+  "url": "https://github.com/scari08/pf2e-prepared-spellkits",
+  "manifest": "https://github.com/scari08/pf2e-prepared-spellkits/releases/latest/download/module.json",
+  "download": "https://github.com/scari08/pf2e-prepared-spellkits/releases/download/1.0.0/module.zip",
+  "readme": "https://github.com/scari08/pf2e-prepared-spellkits/blob/master/README.md",
+  "changelog": "https://github.com/scari08/pf2e-prepared-spellkits/blob/master/CHANGELOG.md",
+  "bugs": "https://github.com/scari08/pf2e-prepared-spellkits/issues",
+  "relationships": {
+    "systems": [
+      {
+        "id": "pf2e",
+        "type": "system",
+        "compatibility": {
+          "minimum": "6.0.1",
+          "verified": "6.12.4"}
+      }
+    ]
+  },
+  "authors": [
+    {
+      "name": "scari08",
+      "email": "andreascari8@gmail.com",
+      "discord": "scari08",
+      "flags": {}
+    }
+  ],
+  "esmodules": ["scripts/hooks.js"]
+}
