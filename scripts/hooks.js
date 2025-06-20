@@ -2,17 +2,11 @@ import { MODULE_ID } from "./consts.js";
 
 Hooks.once("ready", () => {
   Hooks.on("renderCharacterSheetPF2e", addModuleFunctionalities);
-
-  //   Hooks.on("renderCreatureSheetPF2e", );
-
-  //   Hooks.on("renderActorSheetPF2e", );
-
-  //   Hooks.on("renderActorSheet", );
 });
 
 function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
   const actor = characterSheetPF2e.actor;
-  const elem = $elements[0];
+  const elem = $elements[0]; // remove this when jQuery is no longer used
   const matchingListItems = elem.querySelectorAll("ol.spellcastingEntry-list > li.spellcasting-entry");
 
   const preparedSpellcastingEntries = Array.from(matchingListItems)
@@ -31,7 +25,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
   preparedSpellcastingEntries.forEach((entry) => {
     const spellcastingEntry = actor.getEmbeddedDocument("Item", entry.id);
     const currentSpellKit = spellcastingEntry.system.slots;
-    let kitName = "custom"; // TODO check if current is one of the saved and change name
+    let kitName = "custom";
     const savedSpellKits = spellcastingEntry.flags[MODULE_ID] || {};
 
     Object.keys(savedSpellKits).forEach((key) => {
@@ -61,10 +55,10 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Create the arrow icon
     const arrowIcon = document.createElement("span");
     arrowIcon.innerHTML = "&#9660;"; // Down-pointing arrow (▼)
-    arrowIcon.style.cursor = "pointer";
-    arrowIcon.style.marginLeft = "0.25em";
     arrowIcon.classList.add("toggle-arrow");
     arrowIcon.title = "Show Spellkits Loadouts"; // Tooltip on hover
+    arrowIcon.style.cursor = "pointer";
+    arrowIcon.style.marginLeft = "0.25em";
 
     // Insert the arrow next to the button
     entry.button.insertAdjacentElement("afterend", arrowIcon);
@@ -78,7 +72,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create dropdown with initial options
     const dropdown = document.createElement("select");
-    const options = [...(kitName == "custom" ? [{ value: "custom", text: "custom" }] : []), ...Object.keys(savedSpellKits).map((key) => ({ value: key, text: key }))];
+    const options = [...(kitName == "custom" ? [{ value: kitName, text: kitName }] : []), ...Object.keys(savedSpellKits).map((key) => ({ value: key, text: key }))];
     options.forEach((opt) => {
       const option = document.createElement("option");
       option.value = opt.value;
