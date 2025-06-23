@@ -1,7 +1,7 @@
 {
   "id": "pf2e-prepared-spellkits",
   "title": "PF2e Prepared Spellkits",
-  "description": "You can save different loadouts of prepared spells, to load with a click in a new day",
+  "description": "Save different spell loadouts and ready them with a click at the start of a new day",
   "version": "1.0.0",
   "compatibility": {
     "minimum": "12",
