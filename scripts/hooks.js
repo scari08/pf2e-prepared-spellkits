@@ -96,21 +96,33 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     input.placeholder = "Spellkit Loadout Name";
     input.style.flexGrow = "1";
 
-    // Create save button as a small symbol
-    const saveButton = document.createElement("button");
-    saveButton.innerHTML = "&#128190;"; // floppy disk symbol
+    // Create save button as a Font Awesome icon
+    const saveButton = document.createElement("i");
+    saveButton.classList.add("fa-solid", "fa-floppy-disk"); // Font Awesome save icon
     saveButton.title = "Save Spellkit Loadout";
     saveButton.style.fontSize = "1.2em";
     saveButton.style.cursor = "pointer";
-    saveButton.style.border = "none";
     saveButton.style.background = "transparent";
     saveButton.style.width = "auto";
     saveButton.style.padding = "0";
+    saveButton.style.border = "none";
 
-    // Append dropdown, input, and button to expandable div
+    // Create delete button as a trashcan symbol using Font Awesome
+    const deleteButton = document.createElement("i");
+    deleteButton.classList.add("fa-solid", "fa-trash"); // Font Awesome trash icon
+    deleteButton.title = "Delete Spellkit Loadout";
+    deleteButton.style.fontSize = "1.2em";
+    deleteButton.style.cursor = "pointer";
+    deleteButton.style.background = "transparent";
+    deleteButton.style.width = "auto";
+    deleteButton.style.padding = "0";
+    deleteButton.style.border = "none";
+
+    // Append dropdown, input, save, and delete buttons to expandable div
     expandableDiv.appendChild(dropdown);
     expandableDiv.appendChild(input);
     expandableDiv.appendChild(saveButton);
+    expandableDiv.appendChild(deleteButton);
 
     // Find the container with class "spell-ability-data"
     const spellAbilityData = entry.button.closest(".spell-ability-data");
@@ -132,13 +144,18 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
         ui.notifications.warn("Spellkit name cannot be empty.");
         return;
       }
-
-      // Check if value already exists
-      const exists = Array.from(dropdown.options).some((opt) => opt.value === newValue);
       kitName = newValue;
 
       // Save the new spellkit loadout in the item's flags
       spellcastingEntry.setFlag(MODULE_ID, kitName, currentSpellKit);
+    });
+
+    // Delete button click handler
+    deleteButton.addEventListener("click", () => {
+      const selectedValue = dropdown.value;
+      if (selectedValue !== "custom") {
+        spellcastingEntry.unsetFlag(MODULE_ID, selectedValue);
+      }
     });
   });
 }
