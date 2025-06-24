@@ -149,15 +149,29 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     });
 
     // Save button click handler
-    saveButton.addEventListener("click", () => {
+    saveButton.addEventListener("click", async () => {
       const newValue = sanitizeKey(input.value.trim());
-      if (newValue === "") {
-        ui.notifications.warn("Spellkit name cannot be empty.");
+
+      if (newValue.length < 3 || newValue.length > 20) {
+        ui.notifications.error("Spellkit name must be between 3 to 20 characters.");
         return;
       }
-      kitName = newValue;
 
-      // Save the new spellkit loadout in the item's flags
+      if (newValue === "custom") {
+        ui.notifications.error("That name is reserved please choose another one.");
+        return;
+      }
+
+      if (savedSpellKits.hasOwnProperty(newValue)) {
+        const confirmed = await foundry.applications.api.DialogV2.confirm({
+          window: { title: "Overwrite Spellkit Loadout" },
+          content: `<p>A spellkit with the name "<strong>${newValue}</strong>" already exists.<br>Are you sure you want to overwrite it?</p>`,
+          icon: "fa-solid fa-floppy-disk",
+        });
+        if (!confirmed) return;
+      }
+
+      kitName = newValue;
       spellcastingEntry.setFlag(MODULE_ID, kitName, currentSpellKit);
     });
 
@@ -168,7 +182,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
           window: { title: "Delete Spellkit Loadout" },
           content: `<p>Are you sure you want to delete the spellkit "<strong>${selectedValue}</strong>"?</p>`,
-          icon: "fa-solid fa-trash"
+          icon: "fa-solid fa-trash",
         });
         if (confirmed) {
           spellcastingEntry.unsetFlag(MODULE_ID, selectedValue);
