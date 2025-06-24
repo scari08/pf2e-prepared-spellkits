@@ -96,27 +96,38 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     input.placeholder = "Spellkit Loadout Name";
     input.style.flexGrow = "1";
 
-    // Create save button as a Font Awesome icon
-    const saveButton = document.createElement("i");
-    saveButton.classList.add("fa-solid", "fa-floppy-disk"); // Font Awesome save icon
-    saveButton.title = "Save Spellkit Loadout";
-    saveButton.style.fontSize = "1.2em";
-    saveButton.style.cursor = "pointer";
-    saveButton.style.background = "transparent";
-    saveButton.style.width = "auto";
-    saveButton.style.padding = "0";
-    saveButton.style.border = "none";
+    // Create a shared style for icon buttons
+    const iconButtonStyle = {
+      fontSize: "1.2em",
+      cursor: "pointer",
+      background: "transparent",
+      width: "auto",
+      padding: "0",
+      border: "none",
+    };
 
-    // Create delete button as a trashcan symbol using Font Awesome
-    const deleteButton = document.createElement("i");
-    deleteButton.classList.add("fa-solid", "fa-trash"); // Font Awesome trash icon
+    // Helper to apply styles to an element
+    function applyStyles(element, styles) {
+      for (const [key, value] of Object.entries(styles)) {
+        element.style[key] = value;
+      }
+    }
+
+    // Create save button as an <a> with Font Awesome icon
+    const saveButton = document.createElement("a");
+    saveButton.title = "Save Spellkit Loadout";
+    applyStyles(saveButton, iconButtonStyle);
+    const saveIcon = document.createElement("i");
+    saveIcon.classList.add("fa-solid", "fa-floppy-disk");
+    saveButton.appendChild(saveIcon);
+
+    // Create delete button as an <a> with Font Awesome icon
+    const deleteButton = document.createElement("a");
     deleteButton.title = "Delete Spellkit Loadout";
-    deleteButton.style.fontSize = "1.2em";
-    deleteButton.style.cursor = "pointer";
-    deleteButton.style.background = "transparent";
-    deleteButton.style.width = "auto";
-    deleteButton.style.padding = "0";
-    deleteButton.style.border = "none";
+    applyStyles(deleteButton, iconButtonStyle);
+    const deleteIcon = document.createElement("i");
+    deleteIcon.classList.add("fa-solid", "fa-trash");
+    deleteButton.appendChild(deleteIcon);
 
     // Append dropdown, input, save, and delete buttons to expandable div
     expandableDiv.appendChild(dropdown);
