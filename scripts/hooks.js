@@ -52,17 +52,6 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
       }
     });
 
-    // Create the arrow icon
-    const arrowIcon = document.createElement("span");
-    arrowIcon.innerHTML = "&#9660;"; // Down-pointing arrow (▼)
-    arrowIcon.classList.add("toggle-arrow");
-    arrowIcon.title = "Show Spellkits Loadouts"; // Tooltip on hover
-    arrowIcon.style.cursor = "pointer";
-    arrowIcon.style.marginLeft = "0.25em";
-
-    // Insert the arrow next to the button
-    entry.button.insertAdjacentElement("afterend", arrowIcon);
-
     // Create the expandable div styled as flex row
     const expandableDiv = document.createElement("div");
     expandableDiv.classList.add("spellkits-expandable");
@@ -104,6 +93,8 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
       width: "auto",
       padding: "0",
       border: "none",
+      display: "flex",
+      alignItems: "center",
     };
 
     // Helper to apply styles to an element
@@ -112,6 +103,18 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
         element.style[key] = value;
       }
     }
+
+    // Create the arrow icon as an <a> with Font Awesome icon
+    const arrowIcon = document.createElement("a");
+    arrowIcon.title = "Show Spellkits Loadouts";
+    applyStyles(arrowIcon, iconButtonStyle);
+
+    const arrowFaIcon = document.createElement("i");
+    arrowFaIcon.classList.add("fa-solid", "fa-caret-down");
+    arrowIcon.appendChild(arrowFaIcon);
+
+    // Insert the arrow next to the button
+    entry.button.insertAdjacentElement("afterend", arrowIcon);
 
     // Create save button as an <a> with Font Awesome icon
     const saveButton = document.createElement("a");
@@ -145,7 +148,8 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     arrowIcon.addEventListener("click", async () => {
       const isExpanded = expandableDiv.style.display === "flex";
       expandableDiv.style.display = isExpanded ? "none" : "flex";
-      arrowIcon.innerHTML = isExpanded ? "&#9660;" : "&#9654;"; // ▼ or ►
+      arrowFaIcon.classList.toggle("fa-caret-down", isExpanded);
+      arrowFaIcon.classList.toggle("fa-caret-right", !isExpanded);
     });
 
     // Save button click handler
