@@ -156,8 +156,8 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     saveButton.addEventListener("click", async () => {
       const newValue = sanitizeKey(input.value.trim());
 
-      if (newValue.length < 3 || newValue.length > 20) {
-        ui.notifications.error("Spellkit name must be between 3 to 20 characters.");
+      if (newValue.length < 3 || newValue.length > 30) {
+        ui.notifications.error("Spellkit name must be between 3 to 30 characters.");
         return;
       }
 
