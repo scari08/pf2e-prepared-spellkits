@@ -162,10 +162,17 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     });
 
     // Delete button click handler
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", async () => {
       const selectedValue = dropdown.value;
       if (selectedValue !== "custom") {
-        spellcastingEntry.unsetFlag(MODULE_ID, selectedValue);
+        const confirmed = await foundry.applications.api.DialogV2.confirm({
+          window: { title: "Delete Spellkit Loadout" },
+          content: `<p>Are you sure you want to delete the spellkit "<strong>${selectedValue}</strong>"?</p>`,
+          icon: "fa-solid fa-trash"
+        });
+        if (confirmed) {
+          spellcastingEntry.unsetFlag(MODULE_ID, selectedValue);
+        }
       }
     });
   });
