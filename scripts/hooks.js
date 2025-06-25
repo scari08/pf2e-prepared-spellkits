@@ -25,7 +25,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
   preparedSpellcastingEntries.forEach((entry) => {
     const spellcastingEntry = actor.getEmbeddedDocument("Item", entry.id);
     const currentSpellKit = spellcastingEntry.system.slots;
-    let kitName = "custom";
+    let kitName = "";
     const savedSpellKits = spellcastingEntry.flags[MODULE_ID] || {};
 
     Object.keys(savedSpellKits).forEach((key) => {
@@ -61,7 +61,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create dropdown with initial options
     const dropdown = document.createElement("select");
-    const options = [...(kitName == "custom" ? [{ value: kitName, text: kitName }] : []), ...Object.keys(savedSpellKits).map((key) => ({ value: key, text: key }))];
+    const options = [...(kitName == "" ? [{ value: kitName, text: kitName }] : []), ...Object.keys(savedSpellKits).map((key) => ({ value: key, text: key }))];
     options.forEach((opt) => {
       const option = document.createElement("option");
       option.value = opt.value;
@@ -73,7 +73,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // When dropdown value changes, the spellkit of that entry changes
     dropdown.addEventListener("change", () => {
       const selectedValue = dropdown.value;
-      if (selectedValue !== "custom") {
+      if (selectedValue !== "") {
         const kitLoad = savedSpellKits[selectedValue];
         spellcastingEntry.update({ _id: entry.id, "system.slots": kitLoad });
       }
@@ -161,11 +161,6 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
         return;
       }
 
-      if (newValue === "custom") {
-        ui.notifications.error("That name is reserved please choose another one.");
-        return;
-      }
-
       if (savedSpellKits.hasOwnProperty(newValue)) {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
           window: { title: "Overwrite Spellkit Loadout" },
@@ -182,7 +177,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Delete button click handler
     deleteButton.addEventListener("click", async () => {
       const selectedValue = dropdown.value;
-      if (selectedValue !== "custom") {
+      if (selectedValue !== "") {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
           window: { title: "Delete Spellkit Loadout" },
           content: `<p>Are you sure you want to delete the spellkit "<strong>${selectedValue}</strong>"?</p>`,
