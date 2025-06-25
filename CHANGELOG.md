@@ -1,3 +1,6 @@
+# 1.1.1
+- UX: changed "custom" for blank in dropdown when in a non saved spellkit state
+
 # 1.1.0
 - Implemented delete button
 - More validations like characters limits for names
