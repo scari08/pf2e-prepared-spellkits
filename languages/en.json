@@ -1,0 +1,11 @@
+{
+  "I18N.LANGUAGE": "English",
+  "pf2e-prepared-spellkits": {
+    "textbox-placeholder": "Spellkit Loadout Name",
+    "spellkit-save": "Save Spellkit Loadout",
+    "spellkit-delete": "Delete Spellkit Loadout",
+    "spellkit-show": "Show Spellkits Loadouts",
+    "textbox-length-error": "Spellkit name must be between 3 and 30 characters long.",
+    "spellkit-overwrite": "Overwrite existing Spellkit Loadout?"
+  }
+}
