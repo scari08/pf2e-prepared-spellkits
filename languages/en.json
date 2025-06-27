@@ -2,10 +2,12 @@
   "I18N.LANGUAGE": "English",
   "pf2e-prepared-spellkits": {
     "textbox-placeholder": "Spellkit Loadout Name",
-    "spellkit-save": "Save Spellkit Loadout",
-    "spellkit-delete": "Delete Spellkit Loadout",
-    "spellkit-show": "Show Spellkits Loadouts",
     "textbox-length-error": "Spellkit name must be between 3 and 30 characters long.",
-    "spellkit-overwrite": "Overwrite existing Spellkit Loadout?"
+    "spellkit-show-title": "Show Spellkits Loadouts",
+    "spellkit-save-title": "Save Spellkit Loadout",
+    "spellkit-overwrite-title": "Overwrite existing Spellkit Loadout",
+    "spellkit-overwrite-text": "<p>A Spellkit with the name <strong>{newValue}</strong> already exists. Do you want to overwrite it?</p>",
+    "spellkit-delete-title": "Delete Spellkit Loadout",
+    "spellkit-delete-text": "<p>Are you sure you want to delete the Spellkit <strong>{selectedValue}</strong>?</p>"
   }
 }

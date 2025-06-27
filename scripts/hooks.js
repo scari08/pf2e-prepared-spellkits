@@ -82,7 +82,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Create textbox for new value input
     const input = document.createElement("input");
     input.type = "text";
-    input.placeholder = "Spellkit Loadout Name";
+    input.placeholder = game.i18n.localize(MODULE_ID + ".textbox-placeholder");
     input.style.flexGrow = "1";
 
     // Create a shared style for icon buttons
@@ -106,7 +106,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create the arrow icon as an <a> with Font Awesome icon
     const arrowIcon = document.createElement("a");
-    arrowIcon.title = "Show Spellkits Loadouts";
+    arrowIcon.title = game.i18n.localize(MODULE_ID + ".spellkit-show-title");
     applyStyles(arrowIcon, iconButtonStyle);
 
     const arrowFaIcon = document.createElement("i");
@@ -118,7 +118,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create save button as an <a> with Font Awesome icon
     const saveButton = document.createElement("a");
-    saveButton.title = "Save Spellkit Loadout";
+    saveButton.title = game.i18n.localize(MODULE_ID + ".spellkit-save-title");
     applyStyles(saveButton, iconButtonStyle);
     const saveIcon = document.createElement("i");
     saveIcon.classList.add("fa-solid", "fa-floppy-disk");
@@ -126,7 +126,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create delete button as an <a> with Font Awesome icon
     const deleteButton = document.createElement("a");
-    deleteButton.title = "Delete Spellkit Loadout";
+    deleteButton.title = game.i18n.localize(MODULE_ID + ".spellkit-delete-title");
     applyStyles(deleteButton, iconButtonStyle);
     const deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-trash");
@@ -157,14 +157,14 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
       const newValue = sanitizeKey(input.value.trim());
 
       if (newValue.length < 3 || newValue.length > 30) {
-        ui.notifications.error("Spellkit name must be between 3 to 30 characters.");
+        ui.notifications.error(game.i18n.localize(MODULE_ID + ".textbox-length-error"));
         return;
       }
 
       if (savedSpellKits.hasOwnProperty(newValue)) {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
-          window: { title: "Overwrite Spellkit Loadout" },
-          content: `<p>A spellkit with the name "<strong>${newValue}</strong>" already exists.<br>Are you sure you want to overwrite it?</p>`,
+          window: { title: game.i18n.localize(MODULE_ID + ".spellkit-overwrite-title") },
+          content: game.i18n.format(MODULE_ID + ".spellkit-overwrite-text", { newValue: newValue }),
           icon: "fa-solid fa-floppy-disk",
         });
         if (!confirmed) return;
@@ -179,8 +179,8 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
       const selectedValue = dropdown.value;
       if (selectedValue !== "") {
         const confirmed = await foundry.applications.api.DialogV2.confirm({
-          window: { title: "Delete Spellkit Loadout" },
-          content: `<p>Are you sure you want to delete the spellkit "<strong>${selectedValue}</strong>"?</p>`,
+          window: { title: game.i18n.localize(MODULE_ID + ".spellkit-delete-title") },
+          content: game.i18n.format(MODULE_ID + ".spellkit-delete-text", { selectedValue: selectedValue }),
           icon: "fa-solid fa-trash",
         });
         if (confirmed) {

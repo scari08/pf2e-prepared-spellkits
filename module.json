@@ -20,7 +20,8 @@
         "type": "system",
         "compatibility": {
           "minimum": "6.0.1",
-          "verified": "7.2.0"}
+          "verified": "7.2.0"
+        }
       }
     ]
   },
@@ -30,6 +31,13 @@
       "email": "andreascari8@gmail.com",
       "discord": "scari08",
       "flags": {}
+    }
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
     }
   ],
   "esmodules": ["scripts/hooks.js"]
