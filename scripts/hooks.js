@@ -106,7 +106,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create the arrow icon as an <a> with Font Awesome icon
     const arrowIcon = document.createElement("a");
-    arrowIcon.title = game.i18n.localize(MODULE_ID + ".spellkit-show-title");
+    arrowIcon.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-show-title"));
     applyStyles(arrowIcon, iconButtonStyle);
 
     const arrowFaIcon = document.createElement("i");
@@ -118,7 +118,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
 
     // Create save button as an <a> with Font Awesome icon
     const saveButton = document.createElement("a");
-    saveButton.title = game.i18n.localize(MODULE_ID + ".spellkit-save-title");
+    saveButton.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-save-title"));
     applyStyles(saveButton, iconButtonStyle);
     const saveIcon = document.createElement("i");
     saveIcon.classList.add("fa-solid", "fa-floppy-disk");
@@ -127,6 +127,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Create delete button as an <a> with Font Awesome icon
     const deleteButton = document.createElement("a");
     deleteButton.title = game.i18n.localize(MODULE_ID + ".spellkit-delete-title");
+    deleteButton.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-delete-title"));
     applyStyles(deleteButton, iconButtonStyle);
     const deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-trash");
