@@ -1,3 +1,7 @@
+# 1.2.0
+- Added localization support
+- Implemented foundry tooltips
+
 # 1.1.1
 - UX: changed "custom" for blank in dropdown when in a non saved spellkit state
 
