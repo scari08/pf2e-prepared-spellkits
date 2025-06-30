@@ -40,5 +40,8 @@
       "path": "languages/en.json"
     }
   ],
+  "styles": [
+    "styles/pf2e-prepared-spellkits.css"
+  ],
   "esmodules": ["scripts/hooks.js"]
 }
