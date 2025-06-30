@@ -55,9 +55,6 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Create the expandable div styled as flex row
     const expandableDiv = document.createElement("div");
     expandableDiv.classList.add("spellkits-expandable");
-    expandableDiv.style.display = "none";
-    expandableDiv.style.alignItems = "center";
-    expandableDiv.style.gap = "0.5em";
 
     // Create dropdown with initial options
     const dropdown = document.createElement("select");
@@ -85,29 +82,10 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     input.placeholder = game.i18n.localize(MODULE_ID + ".textbox-placeholder");
     input.style.flexGrow = "1";
 
-    // Create a shared style for icon buttons
-    const iconButtonStyle = {
-      fontSize: "1.2em",
-      cursor: "pointer",
-      background: "transparent",
-      width: "auto",
-      padding: "0",
-      border: "none",
-      display: "flex",
-      alignItems: "center",
-    };
-
-    // Helper to apply styles to an element
-    function applyStyles(element, styles) {
-      for (const [key, value] of Object.entries(styles)) {
-        element.style[key] = value;
-      }
-    }
-
     // Create the arrow icon as an <a> with Font Awesome icon
     const arrowIcon = document.createElement("a");
     arrowIcon.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-show-title"));
-    applyStyles(arrowIcon, iconButtonStyle);
+    arrowIcon.classList.add("spellkits-icon-btn");
 
     const arrowFaIcon = document.createElement("i");
     arrowFaIcon.classList.add("fa-solid", "fa-caret-down");
@@ -119,7 +97,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     // Create save button as an <a> with Font Awesome icon
     const saveButton = document.createElement("a");
     saveButton.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-save-title"));
-    applyStyles(saveButton, iconButtonStyle);
+    saveButton.classList.add("spellkits-icon-btn");
     const saveIcon = document.createElement("i");
     saveIcon.classList.add("fa-solid", "fa-floppy-disk");
     saveButton.appendChild(saveIcon);
@@ -128,7 +106,7 @@ function addModuleFunctionalities(characterSheetPF2e, $elements, actorSheet) {
     const deleteButton = document.createElement("a");
     deleteButton.title = game.i18n.localize(MODULE_ID + ".spellkit-delete-title");
     deleteButton.setAttribute("data-tooltip", game.i18n.localize(MODULE_ID + ".spellkit-delete-title"));
-    applyStyles(deleteButton, iconButtonStyle);
+    deleteButton.classList.add("spellkits-icon-btn");
     const deleteIcon = document.createElement("i");
     deleteIcon.classList.add("fa-solid", "fa-trash");
     deleteButton.appendChild(deleteIcon);
