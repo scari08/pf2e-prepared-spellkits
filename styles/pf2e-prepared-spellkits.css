@@ -1,0 +1,18 @@
+/* Expandable container for spellkits */
+.spellkits-expandable {
+  display: none;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* Shared style for icon buttons */
+.spellkits-icon-btn {
+  font-size: 1.2em;
+  cursor: pointer;
+  background: transparent;
+  width: auto;
+  padding: 0;
+  border: none;
+  display: flex;
+  align-items: center;
+}
