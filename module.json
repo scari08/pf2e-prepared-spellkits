@@ -38,6 +38,11 @@
       "lang": "en",
       "name": "English",
       "path": "languages/en.json"
+    },
+    {
+      "lang": "cn",
+      "name": "简体中文",
+      "path": "languages/cn.json"
     }
   ],
   "styles": [
